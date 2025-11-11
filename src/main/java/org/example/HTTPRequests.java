@@ -35,12 +35,12 @@ int id;
         data.put("name", "Deepa");
         data.put("job", "testlead");
 
-        RestAssured.baseURI = "https://reqres.in/api/users";
+
         id = given()
+                .baseUri("https://reqres.in/api/users")
                 .contentType("application/json")
                 .header("x-api-key", "reqres-free-v1")
                 .body(data)
-
                 .when()
                 .post(baseURI)
                 .jsonPath().getInt("id");
