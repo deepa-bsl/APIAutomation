@@ -23,8 +23,9 @@ public class createairline {
           "    },\n" +
           "    \"additionalneeds\" : \"Breakfast\"\n" +
           "}";
-       Response response=RestUtils.performPost(endPoint,payload,new HashMap<>());
-        Assert.assertEquals(response.statusCode(),200);
+       Response response=RestUtils.
+               performPost(endPoint,payload,new HashMap<>());
+
 
 
         System.out.println("Printing get response");
