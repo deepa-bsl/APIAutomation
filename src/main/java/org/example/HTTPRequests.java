@@ -42,8 +42,9 @@ int id;
                 .header("x-api-key", "reqres-free-v1")
                 .body(data)
                 .when()
-                .post(baseURI)
+                .post()
                 .jsonPath().getInt("id");
+         System.out.println(id);
     }
 
         @Test(priority=3,dependsOnMethods = {"createuser"})
@@ -53,15 +54,13 @@ int id;
             data.put("name", "Ram");
             data.put("job", "VP");
 
-            RestAssured.baseURI = "https://reqres.in/api/users/" + id;
-            given()
+           given()
                     .contentType("application/json")
                     .header("x-api-key", "reqres-free-v1")
                     .body(data)
-
-                    .when()
-                    .put(baseURI)
-                    .then()
+           .when()
+                    .put("https://reqres.in/api/users"+id)
+           .then()
                     .statusCode(200)
                     .log().all();
         }

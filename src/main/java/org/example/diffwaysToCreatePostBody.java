@@ -1,6 +1,8 @@
 package org.example;
 
 import com.google.gson.JsonObject;
+import io.restassured.path.json.JsonPath;
+import io.restassured.response.Response;
 import org.json.JSONObject;
 import org.json.JSONTokener;
 import org.testng.annotations.Test;
@@ -10,12 +12,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.HashMap;
 
-import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
+import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.equalTo;
 
 public class diffwaysToCreatePostBody {
-
+int id;
     @Test(priority = 1)
     void testPostusingHashMap()
     {
@@ -57,7 +58,7 @@ public class diffwaysToCreatePostBody {
         String courseArr[] ={"C#","Coding","Ruby"};
         data.put("courses",courseArr);
 
-        given()
+        Response response=given()
                 .baseUri("http://localhost:3000")
                 .contentType("application/json")
                 .body(data.toString())
@@ -73,12 +74,9 @@ public class diffwaysToCreatePostBody {
                 .body("courses[1]",equalTo("Coding"))
                 .body("courses[2]",equalTo("Ruby"))
                 .header("Content-Type","application/json")
-                .log().all();
-
+                .extract().response();
 
     }
-
-
 
 
     @Test(priority =3 )
@@ -106,9 +104,13 @@ public class diffwaysToCreatePostBody {
                 .body("courses[1]", equalTo("GenAI"))
                 .body("courses[2]", equalTo("PlayWright"))
                 .header("Content-Type", "application/json")
-                .log().all();
+                      .log().all();
+
+
 
     }
+
+
 
     @Test(priority =4 )
     void testPostusingExternalJsonFile() throws FileNotFoundException {
